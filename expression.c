@@ -68,7 +68,7 @@ double popNumb(NumbStack * s){
   in case everything is fine it will returns 0.
 */
 int calculate(NumbStack *numbs,OparStack * opstack){  
-      char op = popOpar(opstack); 
+      char op = popOper(opstack); 
       double b = popNumb(numbs); 
       double a = popNumb(numbs); 
       if(op == '+') pushNumb(numbs, a + b);  
@@ -343,7 +343,7 @@ double evaluate(char expression[], Item *matrix_head) {
                if(error == -1){
                 return NAN;
                }
-            popOpar(&op_stack);
+            popOper(&op_stack);
             //If we had a matrix cell the last two numbers are row and column.
             if (matrix_cell) {
                 int col = (int)popNumb(&num_stack);
