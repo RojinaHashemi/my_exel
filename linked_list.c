@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include "settings.h"
 #include "linked_list.h"
 
 Item * createNode(int r, int c, double val, char* f,bool b) {
@@ -19,7 +20,6 @@ Item * createNode(int r, int c, double val, char* f,bool b) {
 }
 
 void addItem(Item ** head, int r, int c, double val, char* f,bool b) {
-    
     Item * temp = *head;
     Item * prev = NULL;
     while(temp != NULL) {
@@ -75,18 +75,23 @@ void printItem(Item * head) {
     Item* temp = head;
     printf("\n--- Spreadsheet Status ---\n");
     while(temp != NULL) {
-        printf("Cell %d %d: Value=%lf, Formula=%s Error:%d\n", 
+        printf("Cell %d %d Value = %lf", 
             temp->row,
             temp->col , 
-            temp->value, 
-            temp->formula,
-            temp->Error
+            temp->value
         );
+        if(strcmp(temp->formula,EMPTY_FORMULA) != 0){
+           printf(" Formula = %s",temp->formula);
+           if(!(temp->Error)){
+            printf("\n");
+           }
+        }
+        if(temp->Error){
+            printf(" ERROR!\n");
+        }
         temp = temp->next;
     }
 }
-
-
 void freeList(Item * head){
     Item * temp;
     while(head != NULL){
