@@ -11,7 +11,7 @@ void reevaluateAll();
 int main() {
     int menuChoice;
    
-    if(! loadFromFile(&head,DATABASE))
+    if(!loadFromFile(&head,DATABASE))
         printf("error loading data");
  
     while (1) {
@@ -41,7 +41,7 @@ int main() {
                     temp[strcspn(temp, "\n")] = '\0'; 
                     double result = evaluate(temp, head);
                     if (result == NAN){
-                        b = false;
+                        b = true;
                     }
                     addItem(&head, r, c, result, temp,b); 
                     reevaluateAll(); 
@@ -56,7 +56,7 @@ int main() {
                     char temp[256]; 
                     int r, c;
                     double value;
-                    bool b = true;
+                    bool b = false;
                     printf("Enter row: "); 
                     scanf("%d", &r);
                     while(getchar() != '\n');
@@ -64,8 +64,6 @@ int main() {
                     scanf("%d", &c);
                     while(getchar() != '\n');
                     printf("Enter value: "); 
-                   
-                   
                     scanf("%lf",&value);
                     addItem(&head, r, c, value, EMPTY_FORMULA,b); 
                     printItem(head);
