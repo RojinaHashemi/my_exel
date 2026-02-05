@@ -10,7 +10,7 @@ Item *head = NULL;
 void reevaluateAll();
 int main() {
     int menuChoice;
-   
+
     if(!loadFromFile(&head,DATABASE))
         printf("error loading data");
  
@@ -29,7 +29,7 @@ int main() {
                 if (sub == 1) {   //formula
                     char temp[256];
                     int r, c;
-                    bool b = true;
+                    bool b = false;
                     printf("Enter row: "); 
                     scanf("%d", &r);
                     while(getchar() != '\n');
@@ -40,7 +40,7 @@ int main() {
                     fgets(temp, 256, stdin);
                     temp[strcspn(temp, "\n")] = '\0'; 
                     double result = evaluate(temp, head);
-                    if (result == NAN){
+                    if (!isfinite(result)){
                         b = true;
                     }
                     addItem(&head, r, c, result, temp,b); 
@@ -110,12 +110,16 @@ void reevaluateAll() {
     Item *tmp = head;
     int reevalCounter =0;
     while (tmp) {
+           if(!isfinite(tmp->value)){
+                break;
+                return;
+            }
         if(reevalCounter > MAXIMUM_REEVALUATION){
             printf("\n Error!!! Loop found in formula definition.\n");
             break;
         }
         if (strcmp(tmp->formula,EMPTY_FORMULA) != 0) {
-            
+           
             double val = evaluate(tmp->formula, head);
             if(tmp->value != val){
                 tmp->value = val;
