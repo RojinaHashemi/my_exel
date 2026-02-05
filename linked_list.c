@@ -75,7 +75,7 @@ void printItem(Item * head) {
     Item* temp = head;
     printf("\n--- Spreadsheet Status ---\n");
     while(temp != NULL) {
-        printf("Cell %d %d Value = %lf", 
+        printf("Cell %d %d Value = %.2f", 
             temp->row,
             temp->col , 
             temp->value

@@ -293,8 +293,7 @@ double evaluate(char expression[], Item *matrix_head) {
             int j = 0;
             while (isAlphaChar(expression[i])){
                  func_name[j++] = expression[i++];}
-            func_name[j] = '\0';
-
+                 func_name[j] = '\0';
             if (!validation(func_name)) 
             { 
                 printf("Error: Unknown function '%s'\n", func_name); 
@@ -327,7 +326,7 @@ double evaluate(char expression[], Item *matrix_head) {
                }
             i++;
             prev = ',';
-
+    
             if (func_stack.top == -1 || strcmp(observeFunc(&func_stack), "pow") != 0) {
               
                 matrix_cell = true; 
@@ -352,7 +351,7 @@ double evaluate(char expression[], Item *matrix_head) {
                 if(col < 0 || row < 0){
                     printf("Error : negative row or column .");
                     return NAN;
-                }
+                } 
                 //we will get the wanted value.
                 double found = 0;
                 found = getValue(matrix_head, row, col);
@@ -373,7 +372,7 @@ double evaluate(char expression[], Item *matrix_head) {
                     //if we had other functions we will use function applyfunc.
                     double x = popNumb(&num_stack);
                     double y = applyFunc(f, x);
-                    if(y == NAN){
+                    if(!isfinite(y)){
                         return NAN;
                     }
                     pushNumb(&num_stack, y);
@@ -394,7 +393,7 @@ double evaluate(char expression[], Item *matrix_head) {
                if(error == -1){
                 return NAN;
                }
-            pushOper(&op_stack, ch);
+            pushOper(&op_stack,ch);
             i++;
             prev = ch;
             continue;
